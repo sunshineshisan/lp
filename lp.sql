@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2025-03-02 17:43:47
+-- 生成日期： 2025-03-08 10:52:01
 -- 服务器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -20,6 +20,42 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `lp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `convension`
+--
+
+CREATE TABLE `convension` (
+  `account` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `height` varchar(10) NOT NULL,
+  `weight` varchar(10) NOT NULL,
+  `xw` varchar(10) NOT NULL,
+  `job` varchar(20) NOT NULL,
+  `video` varchar(50) NOT NULL,
+  `avatar` varchar(50) NOT NULL,
+  `jj` varchar(300) NOT NULL,
+  `id` int(11) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `gender` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 转存表中的数据 `convension`
+--
+
+INSERT INTO `convension` (`account`, `name`, `height`, `weight`, `xw`, `job`, `video`, `avatar`, `jj`, `id`, `city`, `gender`) VALUES
+('01', 'すずき なな', '165', '51', 'D', 'ひしょかん', 'IMG_0358.MP4', 'photo_2025-03-06_01-00-23 (2).jpg', '', 1, '東京', '0'),
+('02', 'さくらい みさき', '165', '45', 'C', 'おんがく きょうし', 'IMG_0335.MP4', 'photo_2025-03-04_05-28-50 (2).jpg', '', 2, '東京', '0'),
+('03', 'ほしの ちなつ', '163', '45', 'C', 'しょくいん', 'IMG_3936.MP4', 'Snipaste_2025-02-28_22-13-tx58.jpg', '', 4, 'なごや', '0'),
+('04', '김태희', '168', '45', 'C', '메이크업 아티스트', 'video_2025-03-04_03-11-32.mp4', 'Snipaste_2025-03-08_14-35-03.jpg', '韓國', 5, '한국 서울', '0'),
+('05', 'Nguyễn Thị Phương', '162', '47', 'B', 'y tá nữ', '1video_2025-03-08_15-23-30.mp4', '1photo_2024-12-14_03-08-36.jpg', '', 6, 'Nha Trang, Việt Nam', '0'),
+('06', '이민호', '170', '51', 'C', '모델러', '2video_2025-03-08_15-23-54.mp4', '2photo_2024-12-18_02-16-44.jpg', '', 7, '서울', '0'),
+('07', 'Lam Shi Yun', '170', '50', 'B', 'Guru Yoga', '3video_2025-03-08_15-24-16.mp4', '3photo_2024-12-28_13-04-40.jpg', '', 8, 'Kuala Lumpur', '0'),
+('08', 'やまぐち ももえ', '165', '50', 'B', 'おんがく きょうし', '5video_2025-03-08_15-24-58.mp4', '5photo_2025-02-11_02-22-01.jpg', '', 9, '福岡県', '0'),
+('09', 'いしはら さとみ', '168', '49', 'B', 'ひしょかん', '6video_2025-03-08_15-25-13.mp4', '6photo_2025-02-26_03-34-08.jpg', '', 10, '東京', '0');
 
 -- --------------------------------------------------------
 
@@ -42,24 +78,25 @@ CREATE TABLE `dating` (
 --
 
 INSERT INTO `dating` (`account`, `vipGrade`, `name`, `money`, `type`, `country`, `id`) VALUES
-('513203', '1', '한준석', '10万원', '1', '韩国', 1),
-('5132031', '1', '정유나', '20万원', '2', '韩国', 2),
-('5132033', '3', 'たかはし しょうた', '200万円', '1', '日本', 3),
-('5132034', '1', 'たなか あおい', '33万円', '2', '日本', 4),
-('5132035', '2', '박서연', '55万원', '2', '韩国', 5),
-('5132036', '2', 'いとう しおり', '60万円', '2', '日本', 6),
-('5132037', '3', 'さき かずや', '120万円', '2', '日本', 7),
-('5132037', '3', 'さき かずや', '100万円', '1', '日本', 8),
-('65165106520', '3', 'ほしの えり', '50万円', '1', '日本', 9),
-('65165106521', '2', 'さとう さくら', '15万円', '1', '日本', 10),
-('65165106523', '2', 'たかはし しょうた', '15万円', '2', '日本', 11),
+('513203', '1', '한준석', '1200000원', '1', '韩国', 1),
+('5132031', '1', '정유나', '1560000원', '1', '韩国', 2),
+('5132033', '0', 'たかはし しょうた', '150000円', '0', '日本', 3),
+('5132034', '1', 'たなか あおい', '330000円', '2', '日本', 4),
+('5132035', '0', '박서연', '550000원', '2', '韩国', 5),
+('5132036', '2', 'いとう しおり', '650000円', '1', '日本', 6),
+('5132037', '3', 'さき かずや', '1200000円', '0', '日本', 7),
+('5132037', '3', 'さき かずや', '100000円', '0', '日本', 8),
+('65165106520', '1', 'ほしの えり', '600000円', '1', '日本', 9),
+('65165106521', '2', 'さとう さくら', '150000円', '1', '日本', 10),
+('65165106523', '2', 'たかはし しょうた', '150000円', '1', '日本', 11),
 ('65165106524', '3', 'William Thompson', '3000USTD', '1', '英国', 12),
-('65165106525', '1', 'わたなべ みほ', '10万円', '1', '日本', 13),
-('65165106526', '1', 'やまもと ゆうき', '5万円', '1', '日本', 14),
-('65165106527', '1', 'くろばね れいな', '12万円', '2', '日本', 15),
-('65169419615', '2', 'くすのき しおり', '10万円', '2', '日本', 16),
+('65165106525', '1', 'わたなべ みほ', '120000円', '0', '日本', 13),
+('65165106526', '1', 'やまもと ゆうき', '36000円', '1', '日本', 14),
+('65165106527', '1', 'くろばね れいな', '100000円', '0', '日本', 15),
+('65169419615', '2', 'くすのき しおり', '50000万円', '0', '日本', 16),
 ('5132038', '3', 'Emma Müller', '6000US', '2', '美国', 17),
-('5132038', '3', 'Emma Müller', '5000US', '1', '美国', 18);
+('5132038', '3', 'Emma Müller', '5000US', '1', '美国', 18),
+('15612', '0', 'さとう けん', '15000円', '1', '日本', 19);
 
 -- --------------------------------------------------------
 
@@ -105,6 +142,26 @@ INSERT INTO `letter` (`id`, `account`, `content`, `img`, `date`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `manage`
+--
+
+CREATE TABLE `manage` (
+  `account` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `loginFlag` varchar(10) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='			weight: '''', 			xw: '''', 			job';
+
+--
+-- 转存表中的数据 `manage`
+--
+
+INSERT INTO `manage` (`account`, `password`, `loginFlag`, `id`) VALUES
+('xiaohu', 'xiaohu123', '1', 1);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `orderlist`
 --
 
@@ -134,7 +191,8 @@ INSERT INTO `orderlist` (`id`, `account`, `makeMoney`, `type`, `date`, `status`)
 (10, '12345', '550000', '1', '2025-03-02 23:50:13', '1'),
 (11, '12345', '10000', '0', '2025-03-02 23:50:47', '1'),
 (12, '12345', '786', '1', '2025-03-03 00:09:47', '1'),
-(13, '12345', '15200', '1', '2025-03-03 00:34:22', '0');
+(13, '12345', '15200', '1', '2025-03-03 00:34:22', '0'),
+(14, '1234', '1000', '0', '2025-03-08 11:42:26', '0');
 
 -- --------------------------------------------------------
 
@@ -202,7 +260,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `account`, `password`, `inviteCode`, `dataError`, `age`, `gender`, `bankCard`, `money`, `avatar`, `vipCode`, `createDate`, `vipGrade`, `name`, `vipStatus`, `likeSquare`) VALUES
 (1, '123', '123', '', NULL, NULL, NULL, NULL, NULL, 'Snipaste_2025-02-26_14-21-25.png', NULL, '2025-02-25 16:37:10', '1', '千本', '', ''),
 (2, '12345', '12345', '1208', NULL, '26', '女', NULL, '1686986', 'Snipaste_2025-02-28_22-13-头像38.jpg', '566814', '2025-02-26 17:29:35', '3', '박지원', '已激活', '21'),
-(3, '1234', '1234', '1234', '1', '25', '女', NULL, '88000', 'Snipaste_2025-02-28_21-45瑞士-59.jpg', '566814', '2025-02-26 17:30:40', '1', 'dd', '制作中', '2375'),
+(3, '1234', '1234', '1234', '1', '25', '女', NULL, '89000', 'Snipaste_2025-02-28_21-45瑞士-59.jpg', '566814', '2025-02-26 17:30:40', '1', 'ddsdasda sd ads asd ', '制作中', '2375'),
 (7, '123', '12312312', '1234', NULL, NULL, NULL, NULL, NULL, 'Snipaste_2025-02-26_14-21-25.png', NULL, '2025-02-26 17:51:24', '1', '千本', '', ''),
 (8, '122', '122', '122', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-26 17:51:39', '1', '', '', ''),
 (9, '132', '132', '122', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-26 17:54:13', '1', '', '', ''),
@@ -228,6 +286,12 @@ INSERT INTO `users` (`id`, `account`, `password`, `inviteCode`, `dataError`, `ag
 --
 
 --
+-- 表的索引 `convension`
+--
+ALTER TABLE `convension`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `dating`
 --
 ALTER TABLE `dating`
@@ -243,6 +307,12 @@ ALTER TABLE `gift`
 -- 表的索引 `letter`
 --
 ALTER TABLE `letter`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `manage`
+--
+ALTER TABLE `manage`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -269,10 +339,16 @@ ALTER TABLE `users`
 --
 
 --
+-- 使用表AUTO_INCREMENT `convension`
+--
+ALTER TABLE `convension`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- 使用表AUTO_INCREMENT `dating`
 --
 ALTER TABLE `dating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用表AUTO_INCREMENT `gift`
@@ -287,10 +363,16 @@ ALTER TABLE `letter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- 使用表AUTO_INCREMENT `manage`
+--
+ALTER TABLE `manage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- 使用表AUTO_INCREMENT `orderlist`
 --
 ALTER TABLE `orderlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- 使用表AUTO_INCREMENT `square`

@@ -1,5 +1,6 @@
 const Router = require('@koa/router');
 const login = require('./login')
+// const home = require('./home')
 const until = require('./util')
 const router = new Router();
 const pool = require('../db');
@@ -14,4 +15,6 @@ router.use(login.routes())
 router.use(login.allowedMethods)
 router.use(until.routes())
 router.use(until.allowedMethods)
+// router.use(home.routes())
+// router.use(home.allowedMethods)
 module.exports = router

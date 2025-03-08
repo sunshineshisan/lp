@@ -31,16 +31,252 @@ router.get('/get/get_user', async (ctx, res, req) => {
         }
     }
 })
-
-router.get('/get/set_user', async (ctx, res, req) => {
+router.get('/get/get_letter', async (ctx, res, req) => {
     let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `select * from letter`
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//操作错误
+router.get('/get/dataError', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `update users set dataError = 1 where account = '${request.account}'`
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+router.get('/get/get_order', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `select makeMoney,date,type,status from orderList where account = '${request.account}'`
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//私约
+router.get('/get/convension', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `select * from convension where gender='${request.gender}' limit ${request.pageIndex*5},5`
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//用户提交申请，待审核
+// router.get('/get/get_order', async (ctx, res, req) => {
+//     let request = ctx.query;
+//     try {
+//         console.log(request)
+//         var sql = `update users set status = 0 where account = ${request.account}`
+//         console.log(sql)
+//         const [rows] = await pool.execute(sql);
+//         ctx.body = {
+//             code: 0,
+//             rows
+//         }
+//     } catch (error) {
+//         console.log(error)
+//         ctx.body = {
+//             code:1,
+//             error
+//         }
+//     }
+// })
+//修改用户积分
+router.get('/get/updateMoney', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = ''
+        if(request.type == 0) {
+            sql += `update users set money = money + CONVERT(${request.makeMoney}, FLOAT) where account = '${request.account}'`
+        } else if (request.type == 1) {
+            sql += `update users set money = money + CONVERT(${request.makeMoney}, FLOAT) where account = '${request.account}'`
+        }
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//账单type 0充值 1提现
+router.get('/get/set_order', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = ''
+        if(request.type == 0) {
+            sql = `insert into orderList(account,makeMoney,type,date) values('${request.account}',${request.makeMoney},${request.type},'${tools.DFormat(new Date())}');`
+        } else if(request.type == 1) {
+            sql = `insert into orderList(account,makeMoney,type,date) values('${request.account}',${request.makeMoney},${request.type},'${tools.DFormat(new Date())}');`
+        }
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//gift
+router.get('/get/get_gift', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `INSERT INTO gift(giftDate) VALUES ('${request.giftDate}')`
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//main
+router.get('/get/likeSquare', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = ''
+        if(request.flag == 'true') {
+            sql = `update users set likeSquare = REPLACE(likeSquare, '${request.likeSquare}', '') where account = '${request.account}'`;
+        } else {
+            sql = `update users set likeSquare = CONCAT(likeSquare, ${request.likeSquare}) where account = '${request.account}'`;
+        }
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+router.get('/get/get_square', async (ctx, res, req) => {
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `select * from square limit ${request.pageIndex*5},5`;
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+//获取公告
+router.get('/get/get_dating', async (ctx, res, req) => {
+    console.log('正在访问:'+ctx.path)
+    let request = ctx.query;
+    try {
+        console.log(request)
+        var sql = `select * from dating limit 30`;
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        console.log(rows)
+        ctx.body = {
+            code: 0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
+// 制作修改会员卡
+router.get('/get/set_user', async (ctx, res, req) => {
+    
+    let request = ctx.query;
+    console.log(request)
     var sql = ""
-    if(request.avatar==undefined) {
-        sql = `UPDATE users SET name='${request.name}' WHERE account = '${request.account}'`
-    }else if(request.name==undefined){
+    if(request.name==undefined){
         sql = `UPDATE users SET avatar='${request.avatar}' WHERE account = '${request.account}'`
-    }else {
-        sql = `UPDATE users SET avatar='${request.avatar}',name='${request.name}' WHERE account = '${request.account}'`
+    } else if(request.vipStatus==''||request.vipStatus==null){
+        sql = `UPDATE users SET  name='${request.name}',vipStatus='制作中',vipGrade='1' WHERE account = '${request.account}'`
+    } else {
+        sql = `UPDATE users SET name='${request.name}' WHERE account = '${request.account}'`
     }
     try {
         console.log(request)
@@ -65,13 +301,27 @@ router.get('/get/login', async (ctx) => {
     console.log('request:', request);
     try {
         if (request.type == 0) {
-            var sql = `select * from users where account = ${request.account} and password = ${request.pwd}`;
+            var sql = `select * from users where account = '${request.account}' and password = '${request.pwd}'`;
+            var exsitSql = `select * from users where account = '${request.account}'`;
             console.log(sql)
             const [rows] = await pool.execute(sql);
+            const [exsitRows] = await pool.execute(exsitSql);
             console.log(rows)
-            ctx.body = {
-                code: 0,
-                rows
+            if(exsitRows.length>0&&rows.length<1) {
+                ctx.body = {
+                    code: 1,
+                    msg:'密码错误'
+                }
+            } else if(rows.length>0){
+                ctx.body = {
+                    code: 0,
+                    rows
+                }
+            } else if(exsitRows.length<1) {
+                ctx.body = {
+                    code: 1,
+                    msg:'你还没有注册'
+                }
             }
         } else if (request.type == 1) {
 
