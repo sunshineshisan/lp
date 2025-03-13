@@ -154,7 +154,7 @@ router.get('/get/updateMoney', async (ctx, res, req) => {
         }
     }
 })
-//账单type 0充值 1提现
+//账单type 0充值 1提现  用户申请默认状态为等待  需要管理员通过
 router.get('/get/set_order', async (ctx, res, req) => {
     let request = ctx.query;
     try {
@@ -206,9 +206,9 @@ router.get('/get/likeSquare', async (ctx, res, req) => {
         console.log(request)
         var sql = ''
         if(request.flag == 'true') {
-            sql = `update users set likeSquare = REPLACE(likeSquare, '${request.likeSquare}', '') where account = '${request.account}'`;
+            sql = `update users set likeSquare = REPLACE(likeSquare, '${request.likeSquare},', '') where account = '${request.account}'`;
         } else {
-            sql = `update users set likeSquare = CONCAT(likeSquare, ${request.likeSquare}) where account = '${request.account}'`;
+            sql = `update users set likeSquare = CONCAT(likeSquare, '${request.likeSquare},') where account = '${request.account}'`;
         }
         console.log(sql)
         const [rows] = await pool.execute(sql);
@@ -228,7 +228,7 @@ router.get('/get/get_square', async (ctx, res, req) => {
     let request = ctx.query;
     try {
         console.log(request)
-        var sql = `select * from square limit ${request.pageIndex*5},5`;
+        var sql = `select * from square ORDER BY id DESC limit ${request.pageIndex*5},5`;
         console.log(sql)
         const [rows] = await pool.execute(sql);
         ctx.body = {
@@ -249,7 +249,7 @@ router.get('/get/get_dating', async (ctx, res, req) => {
     let request = ctx.query;
     try {
         console.log(request)
-        var sql = `select * from dating limit 30`;
+        var sql = `select vipGrade,name,money,type,country,id from dating ORDER BY id DESC limit ${request.pageIndex*request.pageCount},${request.pageCount}`;
         console.log(sql)
         const [rows] = await pool.execute(sql);
         console.log(rows)

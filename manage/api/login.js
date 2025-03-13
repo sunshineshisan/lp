@@ -123,7 +123,7 @@ router.get('/del/square', async (ctx, res, req) => {
     let request = ctx.query;
     try {
         console.log(request)
-        var sql = `delete from square where account = '${request.account}'`
+        var sql = `delete from square where id = '${request.id}'`
         console.log(sql)
         const [rows] = await pool.execute(sql);
         console.log(rows)
@@ -143,7 +143,7 @@ router.get('/update/square', async (ctx, res, req) => {
     console.log('正在访问:'+ctx.path)
     let request = ctx.query;
     try {
-        var sql = `update square set account='${request.account}',vipGrade='${request.vipGrade}',title='${request.title}',content='${request.content}',source='${request.source}',
+        var sql = `update square set account='${request.account}',vipGrade='${request.vipGrade}',title="${request.title}",content="${request.content}",source='${request.source}',
         name='${request.name}',likes='${request.likes}',comment='${request.comment}',share='${request.share}',date='${request.date}' where id='${request.id}'`
         console.log(sql)
         const [rows] = await pool.execute(sql);
@@ -165,7 +165,7 @@ router.get('/get/square', async (ctx, res, req) => {
     let request = ctx.query;
     try {
         console.log(request)
-        var sql = `SELECT * FROM square WHERE 1`
+        var sql = `SELECT * FROM square ORDER BY id DESC`
         console.log(sql)
         const [rows] = await pool.execute(sql);
         console.log(rows)
