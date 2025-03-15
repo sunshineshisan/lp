@@ -10,103 +10,6 @@ app.use(express.static("public"))
 const pool = require('../../db');
 const tools = require('../../tools/index')
 
-//修改密码
-// router.get('/update/pwd', async (ctx, res, req) => {
-//     console.log('正在访问:'+ctx.path)
-//     let request = ctx.query;
-//     try {
-//         console.log(request)
-//         var sql = `update user set password='${request.password}' where id = '${request.id}'`
-//         console.log(sql)
-//         const [rows] = await pool.execute(sql);
-//         console.log(rows)
-//         ctx.body = {
-//             code: 0,
-//             rows
-//         }
-//     } catch (error) {
-//         console.log(error)
-//         ctx.body = {
-//             code:1,
-//             error
-//         }
-//     }
-// })
-//账单管理
-router.get('/get/order', async (ctx, res, req) => {
-    console.log('正在访问:'+ctx.path)
-    let request = ctx.query;
-    try {
-        console.log(request)
-        var sql = `SELECT id, account, makeMoney, type, date, status FROM orderlist ORDER BY id DESC limit ${request.pageIndex*request.pageSize},${request.pageSize}`
-        console.log(sql)
-        var countSql = `select count(id) as sum from users`
-        const [rows] = await pool.execute(sql);
-        const [countRows] = await pool.execute(countSql);
-        console.log(rows)
-        ctx.body = {
-            code: 0,
-            rows,
-            count:countRows[0].sum
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            code:1,
-            error
-        }
-    }
-})
-//用户管理
-router.get('/get/user', async (ctx, res, req) => {
-    console.log('正在访问:'+ctx.path)
-    let request = ctx.query;
-    try {
-        console.log(request)
-        var sql = `SELECT id,account, password, inviteCode, dataError, age, gender, bankCard, money, avatar, vipCode, createDate, vipGrade, name, vipStatus, 
-        likeSquare FROM users ORDER BY id DESC limit ${request.pageIndex*request.pageSize},${request.pageSize}`
-        console.log(sql)
-        var countSql = `select count(id) as sum from users`
-        const [rows] = await pool.execute(sql);
-        const [countRows] = await pool.execute(countSql);
-        console.log(rows)
-        ctx.body = {
-            code: 0,
-            rows,
-            count:countRows[0].sum
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            code:1,
-            error
-        }
-    }
-})
-router.get('/update/user', async (ctx, res, req) => {
-    let request = ctx.query;
-    console.log(request)
-    try {
-        console.log(request)
-        var sql = `UPDATE users SET account='${request.account}',password='${request.password}',inviteCode='${request.inviteCode}',dataError='${request.dataError}',
-        age='${request.age}',gender='${request.gender}',bankCard='${request.bankCard}',money='${request.money}',avatar='${request.avatar}',vipCode='${request.vipCode}',
-        createDate='${request.createDate}',vipGrade='${request.vipGrade}',name='${request.name}',vipStatus='${request.vipStatus}',likeSquare='${request.likeSquare}' 
-        where id='${request.id}'`
-        console.log(sql)
-        const [rows] = await pool.execute(sql);
-        console.log(rows)
-        ctx.body = {
-            code:0,
-            rows
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            code:1,
-            error
-        }
-    }
-})
 //dating
 router.get('/add/dating', async (ctx, res, req) => {
     console.log('正在访问:'+ctx.path)
@@ -114,27 +17,6 @@ router.get('/add/dating', async (ctx, res, req) => {
     try {
         console.log(request)
         var sql = `insert into dating(account, vipGrade, name, money, type, country) values('${request.account}','${request.vipGrade}','${request.name}','${request.money}','${request.type}','${request.country}');`
-        console.log(sql)
-        const [rows] = await pool.execute(sql);
-        console.log(rows)
-        ctx.body = {
-            code: 0,
-            rows
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            code:1,
-            error
-        }
-    }
-})
-router.get('/del/users', async (ctx, res, req) => {
-    console.log('正在访问:'+ctx.path)
-    let request = ctx.query;
-    try {
-        console.log(request)
-        var sql = `delete from users where id = '${request.id}'`
         console.log(sql)
         const [rows] = await pool.execute(sql);
         console.log(rows)
@@ -538,29 +420,8 @@ router.get('/get/updateMoney', async (ctx, res, req) => {
         if(request.type == 0) {
             sql += `update users set money = money + CONVERT(${request.makeMoney}, FLOAT) where account = '${request.account}'`
         } else if (request.type == 1) {
-            sql += `update users set money = money - CONVERT(${request.makeMoney}, FLOAT) where account = '${request.account}'`
+            sql += `update users set money = money + CONVERT(${request.makeMoney}, FLOAT) where account = '${request.account}'`
         }
-        console.log(sql)
-        const [rows] = await pool.execute(sql);
-        ctx.body = {
-            code: 0,
-            rows
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            code:1,
-            error
-        }
-    }
-})
-//账单审核
-router.get('/set/validOrder', async (ctx, res, req) => {
-    let request = ctx.query;
-    try {
-        console.log(request)
-        var sql = `update orderList set vipStatus = 1 where id='${request.id}'`
-       
         console.log(sql)
         const [rows] = await pool.execute(sql);
         ctx.body = {
@@ -686,7 +547,37 @@ router.get('/get/get_dating', async (ctx, res, req) => {
         }
     }
 })
-
+// 制作修改会员卡
+router.get('/get/set_user', async (ctx, res, req) => {
+    
+    let request = ctx.query;
+    console.log(request)
+    var sql = ""
+    if(request.name==undefined){
+        sql = `UPDATE users SET avatar='${request.avatar}' WHERE account = '${request.account}'`
+    } else if(request.vipStatus==''||request.vipStatus==null){
+        sql = `UPDATE users SET  name='${request.name}',vipStatus='制作中',vipGrade='1' WHERE account = '${request.account}'`
+    } else {
+        sql = `UPDATE users SET name='${request.name}' WHERE account = '${request.account}'`
+    }
+    try {
+        console.log(request)
+        
+        console.log(sql)
+        const [rows] = await pool.execute(sql);
+        console.log(rows)
+        ctx.body = {
+            code:0,
+            rows
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            code:1,
+            error
+        }
+    }
+})
 router.get('/get/login', async (ctx) => {
     let request = ctx.query;
     console.log('request:', request);
